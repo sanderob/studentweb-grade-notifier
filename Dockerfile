@@ -1,5 +1,5 @@
 # Image
-FROM node:21.7.3-alpine as base
+FROM node:21.7.3-bookworm as base
 
 # Set the working directory
 WORKDIR /usr/src/discord-bot
