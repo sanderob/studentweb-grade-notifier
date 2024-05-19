@@ -1,20 +1,18 @@
 # Image
-FROM node:20.10.0-bookworm
-
-# We don't need the standalone Chromium
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+FROM node:20.10.0-alpine
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     git \
     curl \
     wget \
     gnupg \
-    ca-certificates \
-    apt-transport-https \
     chromium \
-    --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
 
 # Set the working directory
 WORKDIR /usr/src/discord-bot
@@ -22,8 +20,9 @@ WORKDIR /usr/src/discord-bot
 # Copy the package.json and package-lock.json
 COPY package*.json ./
 
-# Install the dependencies
-RUN npm install
+# Install the dependencies, including Puppeteer with Chromium
+RUN npm install \
+    && npm install puppeteer --save
 
 # Copy the rest of the files
 COPY . .
