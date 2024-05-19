@@ -25,7 +25,7 @@ FROM base as deps
 COPY package*.json ./
 
 # Install the dependencies
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 # Copy the rest of the files
 COPY . .
