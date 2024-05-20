@@ -1,5 +1,7 @@
 # Image
-FROM node:20.10.0-alpine
+FROM node:20.10.0-alpine@sha256:e96618520c7db4c3e082648678ab72a49b73367b9a1e7884cf75ac30a198e454 as base
+
+WORKDIR /usr/src/discord-bot
 
 # Install dependencies
 RUN apk add --no-cache \
@@ -14,18 +16,28 @@ RUN apk add --no-cache \
     ca-certificates \
     ttf-freefont
 
-# Set the working directory
+FROM base as deps
+
 WORKDIR /usr/src/discord-bot
 
 # Copy the package.json and package-lock.json
 COPY package*.json ./
 
 # Install the dependencies, including Puppeteer with Chromium
-RUN npm install \
-    && npm install puppeteer --save
+RUN npm ci --omit=dev
 
-# Copy the rest of the files
-COPY . .
+FROM base as prod
+
+WORKDIR /usr/src/discord-bot
+
+COPY --from=deps /usr/src/discord-bot/node_modules/ node_modules/
+COPY --from=deps /usr/local/lib/node_modules/ node_modules/
+
+COPY bot.js bot.js
+COPY commands/ commands/
+COPY internal/ internal/
+COPY .env .env
+COPY package*.json ./
 
 # Start the app
 CMD ["node", "."]
