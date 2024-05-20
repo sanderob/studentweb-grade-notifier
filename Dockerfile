@@ -1,5 +1,5 @@
 # Image
-FROM node:21.7.3-slim as base
+FROM node:21.7.3-alpine as base
 
 FROM base as deps
 
