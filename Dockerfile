@@ -12,7 +12,7 @@ WORKDIR /usr/src/discord-bot
 COPY package*.json ./
 
 # Install the dependencies
-RUN npm ci --omit=dev
+RUN npm install
 
 FROM base as prod
 
