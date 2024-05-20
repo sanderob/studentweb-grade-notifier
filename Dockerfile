@@ -27,9 +27,7 @@ RUN npm ci --omit=dev
 COPY bot.js bot.js
 COPY commands/ commands/
 COPY internal/ internal/
-COPY deploy_commands.js deploy_commands.js
-
-RUN node deploy_commands.js
+COPY .env .env
 
 # Start the app
 CMD ["node", "."]
