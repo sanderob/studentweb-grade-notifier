@@ -91,5 +91,5 @@ async function watchForGrades() {
         }
 
         console.log(`[${new Date().toLocaleString()}] Waiting...`);
-    }, 10000); // 300000 milliseconds = 5 minutes
+    }, 300000); // 300000 milliseconds = 5 minutes
 }
