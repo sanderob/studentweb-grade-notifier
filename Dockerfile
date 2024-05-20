@@ -18,6 +18,8 @@ RUN apk add --no-cache \
 
 FROM base as deps
 
+WORKDIR /usr/src/discord-bot
+
 # Copy the package.json and package-lock.json
 COPY package*.json ./
 
@@ -25,6 +27,8 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 FROM base as prod
+
+WORKDIR /usr/src/discord-bot
 
 COPY --from=deps /usr/src/discord-bot/node_modules/ node_modules/
 COPY --from=deps /usr/local/lib/node_modules/ node_modules/
