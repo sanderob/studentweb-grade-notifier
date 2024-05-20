@@ -32,12 +32,12 @@ WORKDIR /usr/src/discord-bot
 
 COPY --from=deps /usr/src/discord-bot/node_modules/ node_modules/
 COPY --from=deps /usr/local/lib/node_modules/ node_modules/
-COPY --from=deps package*.json ./
 
 COPY bot.js bot.js
 COPY commands/ commands/
 COPY internal/ internal/
 COPY .env .env
+COPY package*.json ./
 
 # Start the app
 CMD ["node", "."]
