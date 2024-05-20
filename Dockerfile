@@ -25,7 +25,7 @@ COPY --from=deps /usr/local/lib/node_modules ./node_modules
 COPY bot.js /usr/src/discord-bot/bot.js
 COPY internal/ /usr/src/discord-bot/internal/
 COPY commands/ /usr/src/discord-bot/commands/
-COPY package-*.json /usr/src/discord-bot/
+COPY package*.json /usr/src/discord-bot/
 
 # Start the app
 CMD ["node", "."]
