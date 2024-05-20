@@ -66,7 +66,8 @@ async function watchForGrades() {
 
     process.on('SIGINT', handleShutdown);
 
-    while (true) {
+    // Schedule grade checking every 5 minutes using setInterval
+    setInterval(async () => {
         try {
             if (CourseManager.courseCodes.length > 0) {
                 const gradeMap = await getGrade(CourseManager.courseCodes);
@@ -88,8 +89,7 @@ async function watchForGrades() {
         } catch (e) {
             console.error(`Unhandled exception occurred: ${e.message}`);
         }
-        
+
         console.log(`[${new Date().toLocaleString()}] Waiting...`);
-        await new Promise(resolve => setTimeout(resolve, 300000)); // 300000 milliseconds = 5 minutes
-    }
+    }, 300000); // 300000 milliseconds = 5 minutes
 }

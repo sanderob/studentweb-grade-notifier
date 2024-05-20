@@ -8,16 +8,17 @@ WORKDIR /usr/src/discord-bot
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     git \
     curl \
     wget \
     gnupg \
-    ca-certificates \
-    apt-transport-https \
     chromium \
-    --no-install-recommends \
-    && rm -rf /var/lib/apt/lists/*
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont
 
 FROM base as deps
 
@@ -25,7 +26,7 @@ FROM base as deps
 COPY package*.json ./
 
 # Install the dependencies
-RUN npm ci --omit=dev
+RUN npm install --omit=dev 
 
 # Copy the rest of the files
 COPY . .
