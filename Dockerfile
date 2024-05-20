@@ -21,7 +21,10 @@ WORKDIR /usr/src/discord-bot
 
 COPY --from=deps /usr/src/discord-bot/node_modules ./node_modules
 COPY --from=deps /usr/local/lib/node_modules ./node_modules
-COPY --from=deps /usr/src/discord-bot/dist ./dist
+
+COPY bot.js /usr/src/discord-bot/bot.js
+COPY internal/ /usr/src/discord-bot/internal/
+COPY commands/ /usr/src/discord-bot/commands/
 
 # Start the app
 CMD ["node", "."]
